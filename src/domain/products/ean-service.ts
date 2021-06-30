@@ -25,13 +25,13 @@ export class ProductEANService extends ApiService {
   private static instance: ProductEANService;
 
   private constructor() {
-    super(MOCK_PRODUCT_EAN_API);
+    super(PRODUCT_EAN_API);
   }
 
   public async getProduct(code: string, id: string): Promise<IProductEAN> {
     try {
-      //const response = await axios.get(`${this.apiUrl}/get_by_code?code=${code}&device_id=NONE`);
-      const response = await axios.get(`${MOCK_PRODUCT_EAN_API}/${id}`);
+      const response = await axios.get(`${this.apiUrl}/get_by_code?code=${code}&device_id=NONE`);
+      //const response = await axios.get(`${MOCK_PRODUCT_EAN_API}/${id}`);
       const product: IProductMock = response.data;
 
       if (!product) {
@@ -39,7 +39,7 @@ export class ProductEANService extends ApiService {
       }
 
       return {
-        product_id: parseInt(product.id),
+        product_id: parseInt(product.id, 10),
         name: product.title,
         plScore: 0,
         report_text: 'Zgłoś',

@@ -1,4 +1,5 @@
-import { getGuid, getNumber } from '../../utils/data/random-number';
+import { getGuid } from '../../utils/data/random-number';
+import { isNotEmpty } from '../../utils/string';
 
 export interface ICompany {
   name: string;
@@ -64,4 +65,16 @@ export class ProductMock implements IProductMock {
     this.id = getGuid();
     this.image = new URL(imageSrc);
   }
+}
+
+export const EAN8_PATTERN = /(?<=\s)\d{8}(?=\s)/g;
+export const EAN12_PATTERN = /(?<=\s)\d{12}(?=\s)/g;
+export const EAN13_PATTERN = /(?<=\s)\d{13}(?=\s)/g;
+
+export function isEANCode(text: string): boolean {
+  if (isNotEmpty(text)) {
+    const regex = new RegExp(EAN13_PATTERN);
+    return regex.test(text.trim());
+  }
+  return false;
 }
